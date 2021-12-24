@@ -1,6 +1,6 @@
 <template>
   <div
-    class="max-w-4xl flex items-center h-auto lg:h-screen flex-wrap mx-auto my-32 lg:my-0"
+    class="max-w-4xl flex items-center h-auto lg:h-screen flex-wrap mx-auto my-32 lg:my-0 "
   >
     <!--Main Col-->
     <div
@@ -17,13 +17,11 @@
           "
         ></div>
 
-        <h1 class="text-3xl font-bold pt-8 lg:pt-0"> {{user.fullname}}</h1>
+        <h1 class="text-3xl font-bold pt-8 lg:pt-0"> {{user.fullName}}</h1>
         <div
           class="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-green-500 opacity-25"
         ></div>
-        <p
-          class="pt-4 text-base font-bold flex items-center justify-center lg:justify-start"
-        >
+        <p class="pt-4 text-base font-bold flex items-center justify-center lg:justify-start">
           <svg
             class="h-4 fill-current text-green-700 pr-4"
             xmlns="http://www.w3.org/2000/svg"
@@ -33,11 +31,9 @@
               d="M9 12H1v6a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-6h-8v2H9v-2zm0-1H0V5c0-1.1.9-2 2-2h4V2a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1h4a2 2 0 0 1 2 2v6h-9V9H9v2zm3-8V2H8v1h4z"
             />
           </svg>
-         phone N° : {{user.phone_number}}
+         phone N° : {{user.phoneNumber}}
         </p>
-          <p
-          class="pt-4 text-base font-bold flex items-center justify-center lg:justify-start"
-        >
+        <p class="pt-4 text-base font-bold flex items-center justify-center lg:justify-start">
           <svg
             class="h-4 fill-current text-green-700 pr-4"
             xmlns="http://www.w3.org/2000/svg"
@@ -47,11 +43,9 @@
               d="M9 12H1v6a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-6h-8v2H9v-2zm0-1H0V5c0-1.1.9-2 2-2h4V2a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1h4a2 2 0 0 1 2 2v6h-9V9H9v2zm3-8V2H8v1h4z"
             />
           </svg>
-         Address : {{user.address}}
+         Address : {{user.city}}
         </p>
-          <p
-          class="pt-4 text-base font-bold flex items-center justify-center lg:justify-start"
-        >
+          <p class="pt-4 text-base font-bold flex items-center justify-center lg:justify-start">
           <svg
             class="h-4 fill-current text-green-700 pr-4"
             xmlns="http://www.w3.org/2000/svg"
@@ -84,12 +78,12 @@
     </div>
 
     <!--Img Col-->
-    <div class="w-full lg:w-2/5">
+    <div class="object-cover h-48 w-96 ">
       <!-- Big profile image for side bar (desktop) -->
 
       <img
-        :src="user.profile_image_uri"
-        class="rounded-none lg:rounded-lg shadow-2xl hidden lg:block"
+        :src="this.user.profileImageURI"
+        class="rounded-none lg:rounded-lg shadow-2xl hidden lg:block lg"
       />
       <!-- Image from: http://unsplash.com/photos/MP0IUfwrn0A -->
     </div>
@@ -114,7 +108,7 @@
             full name
           </label>
           <input
-            v-model="this.data.fullname"
+            v-model="this.data.fullName"
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="username"
             type="text"
@@ -130,7 +124,7 @@
             Email
           </label>
           <input
-            v-model="this.data.Email"
+            v-model="this.data.email  "
             class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             id="password"
             type="text"
@@ -145,7 +139,7 @@
             phone Number
           </label>
           <input
-            v-model="this.data.phone_number"
+            v-model="this.data.phoneNumber"
             class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             id="password"
             type="text"
@@ -175,7 +169,7 @@
             address
           </label>
           <input
-            v-model="this.data.address"
+            v-model="this.data.city"
             class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             id="password"
             type="text"
@@ -208,11 +202,11 @@ export default {
     return {
       user:{},
       data: {
-        fullname: "",
-        Email: "",
-        phone_number: "",
-        address: "",
-        imageUrl: "",
+        fullName: "",
+        email: "",
+        phoneNumber: "",
+        city: "",
+        profileImageURI: "",
       },
       imageData: null,
       picture: "https://source.unsplash.com/MP0IUfwrn0A",
@@ -226,20 +220,30 @@ export default {
       this.userId = localStorage.session;
       var url = `http://localhost:5000/users/getone/${this.userId}`;
      const res = await Axios.get(url);
+     console.log(res ,"<==========")
      this.user=res.data
-     console.log(this.user,"BBBBBBBBB");
-   
+     console.log(res.data.profileImageURI,"BBBBBBBBB");
+    this.picture = res.data.profileImageURI
     this.joined =  moment(res.data.createdAt).fromNow();
   },
   methods: {
     async editeProfile() {
-      var url = `http://localhost:5000/users/update/${this.userId}`;
-      console.log(this.data,"AAAAAAAAAAAAAAAAAa")
+      var url = `http://localhost:5000/users/updates/${this.userId}`;
       const res = await Axios.put(url, this.data);
       if (!JSON.stringify(res).includes("error")) {
         this.edite = false;
-        console.log(res);
+       this.refrech()
       }
+    },
+   async refrech(){
+       this.userId = localStorage.session;
+      var url = `http://localhost:5000/users/getone/${this.userId}`;
+     const res = await Axios.get(url);
+     console.log(res ,"<==========")
+     this.user=res.data
+     console.log(res.data.profileImageURI,"BBBBBBBBB");
+    this.picture = res.data.profileImageURI
+    this.joined =  moment(res.data.createdAt).fromNow();
     },
     changeview() {
       this.edite = !this.edite;
