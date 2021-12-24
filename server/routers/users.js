@@ -18,15 +18,17 @@ router.route("/getone/:userId").get(async(req, res) => {
 });
 
 
-router.route("/update/:userId").put(async (req,res)=>{
+router.route("/updates/:userId").put(async (req,res)=>{
     const id = req.params.userId;
     const data = req.body;
     for (var k in data) {
-        if(!data[k])
+        if(data[k]==="")
         {
             delete data[k];
         }
     }
+ 
+
     const updatedUser = await User.findByIdAndUpdate({_id:id},data , {new:true})
     res.send(updatedUser);
 });

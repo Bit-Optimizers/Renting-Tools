@@ -54,7 +54,7 @@ const userSchema = mongoose.Schema(
     profileImageURI: {
       type: String,
       default:
-        "https://st2.depositphotos.com/1009634/7235/v/600/depositphotos_72350117-stock-illustration-no-user-profile-picture-hand.jpg",
+        "https://scontent.ftun4-1.fna.fbcdn.net/v/t39.30808-6/248023235_10215346462573249_509336240872393244_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=JEUMXTQZdykAX-mAtPS&tn=KiWWX64isDGQiX8y&_nc_ht=scontent.ftun4-1.fna&oh=00_AT-qGy08ylDM8Ha_wjX5U6XBa3QYQ2ocDWXiRspFFHJgQg&oe=61CAD049",
     },
     banned: {
       type: Boolean,
