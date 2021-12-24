@@ -11,10 +11,12 @@ import Auth from "@/layouts/Auth.vue";
 import Login from "@/views/auth/Login.vue";
 import Signup from "@/views/auth/Signup.vue";
 import profile from "@/views/Profile.vue";
-
+import addtool from "@/views/AddTool.vue";
 import Landing from "@/views/Landing.vue";
 import LoginAdmin from "@/views/admin/LoginAdmin.vue";
 import Users from "@/views/admin/Users.vue";
+
+
 
 const routes = [
   {
@@ -49,6 +51,10 @@ const routes = [
   {
     path: "/profile",
     component: profile,
+  },
+  {
+    path: "/addtool",
+    component: addtool,
   },
 ];
 

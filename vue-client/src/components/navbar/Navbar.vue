@@ -2,6 +2,7 @@
   <nav>
     <ul class="menu">
       <li><router-link to="/">Home</router-link></li>
+      <li><router-link to="/addtool">addtool</router-link></li>
       <li>
         <a>About Us</a>
       </li>

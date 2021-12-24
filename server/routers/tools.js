@@ -1,11 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const ToolsController = require("../controllers/tools");
-
+const tool = require("../models/tool")
 router
   .route("/")
   .get(ToolsController.find_All)
-  .post(ToolsController.create_A_New_One);
+  .post(async(req,res)=>{
+        var data = req.body ; 
+        var newTool = await tool.create(data, {new:true})
+        res.send(newTool)  
+      });
 
 router
   .route("/:itemId")
