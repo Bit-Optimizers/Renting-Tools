@@ -5,16 +5,18 @@ const tool = require("../models/tool")
 router
   .route("/")
   .get(ToolsController.find_All)
-  .post(async(req,res)=>{
-        var data = req.body ; 
-        var newTool = await tool.create(data, {new:true})
-        res.send(newTool)  
-      });
+  .post(ToolsController.create_A_New_One)
+
+
 
 router
   .route("/:itemId")
   .get(ToolsController.find_One)
   .put(ToolsController.update_One)
   .patch(ToolsController.view_Plus_PLUS)
-  .delete(ToolsController.remove_One);
+  .delete(async(req,res)=>{
+   const id = req.params.itemId;
+   const dele = await tool.findByIdAndRemove({ _id: id},{new:true})
+   console.log(dele)
+  });
 module.exports = router;

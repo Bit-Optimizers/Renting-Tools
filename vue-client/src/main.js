@@ -15,7 +15,8 @@ import addtool from "@/views/AddTool.vue";
 import Landing from "@/views/Landing.vue";
 import LoginAdmin from "@/views/admin/LoginAdmin.vue";
 import Users from "@/views/admin/Users.vue";
-
+import Tools from "@/views/Tools.vue";
+import Mytool from "@/views/Mytool.vue"
 
 
 const routes = [
@@ -55,6 +56,14 @@ const routes = [
   {
     path: "/addtool",
     component: addtool,
+  },
+  {
+    path: "/tools",
+    component: Tools,
+  },
+  {
+    path: "/mytools",
+    component: Mytool,
   },
 ];
 

@@ -68,8 +68,9 @@ export default {
      Navbar
  },
  mounted:function() {
-    this.tool.userId = JSON.parse(localStorage.getItem("session"))  
-    console.log(this.tool.userId)
+    var id = localStorage.getItem("session")  
+    this.tool.userId=id
+    console.log(this.tool);
  }
  ,
  data(){

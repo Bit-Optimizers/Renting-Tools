@@ -1,8 +1,11 @@
 const express = require("express");
+const nodemailer = require("nodemailer");
 const router = express.Router();
 const UsersController = require("../controllers/users");
 // const { , checkUser } = require("../middleware/auth");
 var User = require("../models/user");
+const {serverEmail, serverPassword} = require("../config/settings").email
+console.log(serverEmail, serverPassword)
 
 router.route("/login").post(UsersController.login_a_user);
 router.route("/signup").post(UsersController.create_a_user);
@@ -58,6 +61,94 @@ router.route("/:userId/tools/:toolId")
     .get(UsersController.find_One_Tool_of_Specific_User) // any user (or admin) can have acces to a specific tool of a specific user
     .put( UsersController.update_One_Tool_of_Specific_User) // only the owner or admin can modify (or ban) a specific tool
     .delete( UsersController.remove_One_Tool_of_Specific_User) // only the owner (or any admin) can remove a specific tool that he owns
+
+
+
+
+    router.post("/feedback", async (req, res) => {
+      // Retreive data from req.body with destructuring
+      let { content ,email, subject, text, html } = req.body; // if you rename one of these variable, the sever will brake
+      //
+      // if the email is not specified from the font-end side, it will take a default testing email:
+      if (!email) email = "aminejelassi95@gmail.com";
+      //
+      // if the subject is not specified from the font-end side, it will take a default value as a boilerplate:
+      if (!subject) subject = "A new user made a feedback";
+      //
+      // if the text is not specified from the font-end side, it will take a default value as a boilerplate:
+      if (!text) text = ""; // this is at the same time useless & usefull later, the text variable should be specified (even as an empty value), because, if we pass the content of the html variable as a text, the content of html will be shown with the html tags hardcoded
+      //
+      // if the html is not specified from the font-end side, it will take a default value as a boilerplate: (ARROW FUNCTION !!!!)
+      const init_HTML_Message = (fullName , content ) =>
+        `<p>Hello ${fullName}</p>
+        <p>${content}</p>`;
+    
+    
+          // if the html is not specified from the font-end side, it will take a default value as a boilerplate
+          if (!html) {
+            html = init_HTML_Message( "amine jelassi", content);
+          }
+    
+          // we create a newMail settings, which take, the email of person who lost his password, the subject of the mail, the text & the html that will be shown when the person receive an email from our server
+          const newMail = { email, subject, text, html };
+          //
+          // this function will send an email directly to the user
+    
+          //
+          // send a response to the front end saying that the server did his job
+          
+    
+            let transporter = nodemailer.createTransport({
+              service: "gmail",
+              auth: {
+                user: serverEmail, // generated ethereal user
+                pass: serverPassword, // generated ethereal password
+              },
+            });
+        
+            try {
+              // send mail with defined transport object
+              console.log('AAAAAAAAAAAA', transporter);
+              let info = await transporter.sendMail({
+                from: `"tools renter 👻" <${serverEmail}>`, // sender address
+                to: email, // list of receivers
+                subject: subject, // Subject line
+                // text: "Hello world?", // plain text body
+                html: html, // html body
+              });
+        
+              console.log("Message sent: %s", info.messageId);
+              // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+        
+              // Preview only available when sending through an Ethereal account
+              console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+              // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+              res
+            .status(201)
+            .json(
+              "We've sent to you an email containing new link for reseting password for your teacher account"
+            );
+            } catch (error) {
+              console.error(error)
+            }
+    
+    
+      // followed this guide: https://mailtrap.io/blog/nodemailer-gmail/
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // prettier-ignore
 router.route("/:userId/tools/:toolId/comments/:commentId")

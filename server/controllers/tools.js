@@ -1,4 +1,5 @@
 var Tool = require("../models/tool");
+var User = require("../models/user");
 const { whisp, gossip, yell, ignore } = require("../helpers/whisper");
 ignore(gossip);
 
@@ -52,15 +53,15 @@ module.exports = {
       // update the Tool by setting the foundUser._id  (the id object, and not the string id) to user attribute
       let updatedTool = await Tool.findByIdAndUpdate(
         newTool?._id,
-        { user: foundUser?._id },
+        { owner: foundUser?._id },
         { new: true }
-      ).populate("user")
+      ).populate("owner")
       .select("-password")
 
       whisp("Server Response: ");
       whisp("Updated Tool: ", updatedTool, "\n");
 
-      res.status(201).send(updatedOwnerPost);
+      res.status(201).send(updatedTool);
     } catch (error) {
       yell(error)
       next(error);

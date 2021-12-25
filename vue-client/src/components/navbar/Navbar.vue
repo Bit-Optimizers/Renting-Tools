@@ -4,10 +4,15 @@
       <li><router-link to="/">Home</router-link></li>
       <li><router-link to="/addtool">addtool</router-link></li>
       <li>
-        <a>About Us</a>
+         <router-link to="/mytools">myTools</router-link>
       </li>
       <li>
-        <a>Tools</a>
+        <router-link to="/tools">Tools</router-link>
+      
+      </li>
+      <li>
+        <router-link to="/profile">profile</router-link>
+      
       </li>
       <li>
         <router-link to="/auth/login">Log in</router-link>
@@ -15,6 +20,7 @@
       <li>
         <router-link to="/auth/signup">Sign in</router-link>
       </li>
+      
     </ul>
   </nav>
 </template>

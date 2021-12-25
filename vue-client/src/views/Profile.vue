@@ -1,6 +1,10 @@
 <template>
+
+<div> 
+  <Navbar/>
   <div
-    class="max-w-4xl flex items-center h-auto lg:h-screen flex-wrap mx-auto my-32 lg:my-0 "
+
+    class="max-w-4xl flex items-center h-auto lg:h-screen flex-wrap mx-auto my-32 lg:my-0 profile "
   >
     <!--Main Col-->
     <div
@@ -189,15 +193,17 @@
       </form>
     </div>
   </div>
+  </div>
 </template>
 
 <script>
 // ///////////////////////JAVA SCRIPT//////////////////////
 import Axios from "axios";
 import moment from "moment"
-
+import Navbar from '../components/navbar/Navbar.vue'
 export default {
   name: "profile",
+  components:{ Navbar},
   data() {
     return {
       user:{},
@@ -258,6 +264,10 @@ export default {
 ////////////////////////JAVA SCRIPT ///////////////////////////
 </script>
 
-<style></style>
+<style>
+.profile{
+  margin: 150px;
+}
+</style>
 
-<style></style>
+

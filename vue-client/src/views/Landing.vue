@@ -593,6 +593,7 @@
                       Full Name
                     </label>
                     <input
+                    v-model="FullName"
                       type="text"
                       class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="Full Name"
@@ -607,6 +608,7 @@
                       Email
                     </label>
                     <input
+                    v-model="Email"
                       type="email"
                       class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="Email"
@@ -621,6 +623,7 @@
                       Message
                     </label>
                     <textarea
+                    v-model="message"
                       rows="4"
                       cols="80"
                       class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
@@ -631,6 +634,7 @@
                     <button
                       class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       type="button"
+                      @click="sendMail"
                     >
                       Send Message
                     </button>
@@ -648,11 +652,35 @@
 <script>
 import Navbar from "@/components/navbar/Navbar.vue";
 import FooterComponent from "@/components/Footers/Footer.vue";
-
+import Axios from "axios"
 export default {
   components: {
     Navbar,
     FooterComponent,
   },
+  data(){
+    return {
+      FullName:"",
+      Email:"",
+      message:""
+    }
+  },
+  methods:{
+    async sendMail(){
+    var  cont="A feed back has been sent from "+ this.FullName +" who has this Email "+this.Email+" feed back :  "+this.message  
+        var obj ={
+           content : cont
+             }
+        console.log(obj);
+     var url = "http://localhost:5000/users/feedback"
+     console.log(obj);
+     var res = Axios.post(url, obj)
+     console.log(res)
+     this.FullName=""
+     this.Email=""
+     this.message=""
+     alert("thank you for your attention")
+       }
+  }
 };
 </script>
