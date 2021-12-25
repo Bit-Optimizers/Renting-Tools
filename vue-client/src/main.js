@@ -17,7 +17,8 @@ import LoginAdmin from "@/views/admin/LoginAdmin.vue";
 import Users from "@/views/admin/Users.vue";
 import Tools from "@/views/Tools.vue";
 import Mytool from "@/views/Mytool.vue"
-
+import Forgotpassword from "@/views/auth/Forgotpassword.vue"
+import reset from"@/views/auth/Resetpassword.vue"
 
 const routes = [
   {
@@ -65,6 +66,13 @@ const routes = [
     path: "/mytools",
     component: Mytool,
   },
+  {
+    path: "/forgotpassword",
+    component:Forgotpassword,
+  },  {
+    path: "/auth/resetpassword/:id",
+    component:reset,
+  }
 ];
 
 const router = createRouter({

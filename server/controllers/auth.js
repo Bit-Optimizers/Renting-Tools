@@ -74,16 +74,21 @@ module.exports = {
     forgotPassword: async (req, res) => {
       let { email, mailerParams } = req.body;
       if(!email) email = testerEmail
-
+      
       try {
+
         let foundUser = await User.findOne({ email })
+       console.log(foundUser);
         if(foundUser){
           let hash_link = require("crypto").randomBytes(64).toString("hex")
           // if the hash_link already exists in the databse, then generate a new hash_link
+          console.log(">>>>>>>>>>><<<<<<<<<<<<<")
           while (await ResetPassword.findOne({ hash: hash_link })) {
+            console.log(">>>>>>>>>>><<<<<<<<<<<<<")
             // generate a new random hash_link (very long haxadecimal string)
             hash_link = require("crypto").randomBytes(64).toString("hex")
           }
+          console.log(">>>>>>>>>>><<<<<<<<<<<<<")
           // creating a new password reseter
           const resetPassword = {
             id: foundUser._id,
@@ -93,14 +98,13 @@ module.exports = {
 
           // save the password reseter into the database
           const createdResetPassword = await ResetPassword.create(resetPassword);
-
+      
           // const { websiteName, websiteURL, subject, mailerParams, htmlFormat } = mailerParams
           if(!mailerParams) mailerParams = {}
           mailerParams.fullName = foundUser.fullName
           mailerParams.email = email
           mailerParams.hash_link = hash_link
-          console.log(`qqqqqqqqqqqqqqqqq`,mailerParams)
-          gMailer(mailerParams, "signup")
+          gMailer(mailerParams, "forgotpassword")
 
           res.status(201).json("We've sent to you an email containing new link for reseting password for your teacher account")
         } else {
